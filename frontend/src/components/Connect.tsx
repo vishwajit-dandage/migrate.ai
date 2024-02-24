@@ -12,11 +12,42 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ProviderDetailsPlaceholder } from "@/constant/constant";
-import { useCloudProviderStore } from "@/store/app";
+import { useQueryCloudProvider } from "@/hooks/useCloudProviderQuery";
+import { useCloudProviderStore, useStoreProvider } from "@/store/app";
+import axios from "axios";
+import { headers } from "next/headers";
+import { useEffect, useState } from "react";
+import { ProviderService } from "../../services/provider";
+import { redirect } from "next/navigation";
 type ObjectKey = keyof typeof ProviderDetailsPlaceholder;
 export function Connect() {
+  const [key, setKey] = useState("");
+  const [secret, setSecret] = useState("");
   const selectedProvider = useCloudProviderStore((state) => state.provider);
+  const setProviderData = useStoreProvider((state) => state.handleProvider);
   const provider = selectedProvider as ObjectKey;
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const encodedStringBtoA = btoa(`${key}:${secret}`);
+
+  // const { data: providerData, isLoading } = useQueryCloudProvider(
+  //   encodedStringBtoA,
+  //   selectedProvider
+  // );
+
+  const handleMigrateData = () => {
+    setIsLoading(true);
+    const providerData = ProviderService.getConnectionToProvider(
+      encodedStringBtoA,
+      selectedProvider
+    );
+    if (providerData) {
+      setProviderData(providerData);
+      redirect("/");
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {});
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -36,17 +67,27 @@ export function Connect() {
             <Label htmlFor="name" className="text-right">
               {ProviderDetailsPlaceholder[provider].key}
             </Label>
-            <Input id="userid" className="col-span-3" />
+            <Input
+              id="userid"
+              className="col-span-3"
+              onChange={(e) => setKey(e.target.value)}
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="username" className="text-right">
-            {ProviderDetailsPlaceholder[provider].secret}
+              {ProviderDetailsPlaceholder[provider].secret}
             </Label>
-            <Input id="userkey" className="col-span-3" />
+            <Input
+              id="userkey"
+              className="col-span-3"
+              onChange={(e) => setSecret(e.target.value)}
+            />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Connect</Button>
+          <Button type="submit" onClick={handleMigrateData}>
+            {isLoading ? "Connecting...." : "Connect"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

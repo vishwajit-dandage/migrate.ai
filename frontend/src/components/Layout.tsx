@@ -2,6 +2,9 @@ import React from "react";
 import { Connect } from "./Connect";
 import ProviderData from "./ProviderData";
 import DropDownComp from "./DropDownComp";
+import DisplayFetchedProvider from "./DisplayFetchedProvider";
+import { Button } from "./ui/button";
+import Migrate from "./Migrate";
 
 const Layout = () => {
   return (
@@ -15,6 +18,7 @@ const Layout = () => {
           <div>Select resources to migrate</div>
         </div>
         <ProviderData />
+        <Migrate />
       </div>
       <div className=" shadow-sm h-[400px] w-[50%] border-2 border-lime-100"></div>
     </div>
