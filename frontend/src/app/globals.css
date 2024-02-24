@@ -74,3 +74,125 @@
     @apply bg-background text-foreground;
   }
 }
+body{
+  /* background: linear-gradient(111deg, rgba(240,228,240,1) 0%, rgba(221,191,166,1) 11%, rgba(221,191,166,1) 35%, rgba(60,17,120,0.46186396922050066) 100%); */
+  /* background: rgb(159,185,229); */
+  /* background: linear-gradient(115deg, rgba(159,185,229,1) 1%, rgba(148,187,233,0.2097631288843662) 100%); */
+  /* background-color: #daafda; */ 
+
+  /* background: rgb(240,228,240);
+  background: linear-gradient(115deg, rgba(240,228,240,1) 0%, rgba(221,191,166,1) 0%, rgba(221,191,166,1) 35%, rgba(60,17,120,0.88763427734375) 100%);
+  background: rgb(240,228,240);
+  background: linear-gradient(90deg, rgba(240,228,240,1) 0%, rgba(226,217,217,1) 35%);
+  background: rgb(240,228,240);
+  background: linear-gradient(90deg, rgba(240,228,240,1) 3%, rgba(226,217,217,0.8372141092765231) 61%); */
+  background-color:aliceblue;
+  background-color: beige;
+  background: rgb(240,228,240);
+  background: linear-gradient(90deg, rgba(240,228,240,1) 3%, rgba(220, 222, 176, 0.837) 61%);
+  z-index: 1;
+}
+.navbar-background{
+  background-color:#3C1178;
+  /* font-family: "Roboto", sans-serif; */
+  font-size: 30px; 
+  font-weight: bold;
+  /* background-image: linear-gradient(90deg,#3C1178,#6674a0); */
+  /* background-color: #6674a0; */
+  color:wheat;
+  background-color: rgb(19, 19, 44);
+}
+ .product-name{
+  color: wheat;
+  border-bottom: 2px solid wheat;
+  cursor: pointer;
+}
+.product-name:hover{
+  color: rgb(224, 235, 78);
+  transition: transform 2s linear;
+  cursor: pointer;
+  border-bottom: 2px solid rgb(224, 235, 78);
+} 
+
+.section-item{
+  /* padding: 5px; */
+   margin:5px ;
+  border: 2px solid rgb(203, 188, 152);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 5px;
+  
+}  
+
+.item-title{
+  /* margin-left:10px; */
+  font-weight: bold;
+  padding: 5px;
+  margin-left: 5px;
+}
+
+.text-xs{
+  
+  /* padding: 5px; */
+}
+.form-container{
+  /* border:1px solid green; */
+  margin-top: 10rem ;
+  display: flex;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+
+
+}
+.gcp-connection-form{
+  flex-direction: row;
+  margin-top:10px ;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  width: 80%;
+  column-gap: 10px;
+  /* border:1px solid red; */
+  border-radius: 5px;
+  padding:10px ;
+  
+}
+
+.gcp-connection-form label{
+  font-weight: bold;
+}
+.gcp-connection-form label,textarea{
+display: block;
+margin-bottom: 20px;
+
+
+}
+.gcp-connection-form input{
+  width: 100%;
+  border:none;
+  display: block;
+  margin-bottom:20px ;
+}
+ .input-text-area{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ }
+.submit-sercice-account{
+  display: block;
+  width: 50%;
+ padding: 10px;
+  height: auto;
+  border:1px solid black;
+  border-radius: 5px;
+  background-color: rgb(19, 19, 44);
+  color:whitesmoke;
+}
+
+.footer{
+  color:wheat;
+  font-weight: bold;
+  background-color: rgb(19, 19, 44);
+}

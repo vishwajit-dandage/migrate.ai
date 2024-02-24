@@ -32,14 +32,14 @@ const Section = ({ ProviderData, svgIcon, section }: SectionProps) => {
   // console.log("clicked: ", clickedBoxes);
   return (
     <>
-      <div className="flex gap-5">
+      <div className="flex gap-5 item-container">
         {ProviderData.map((value, index) => (
           <div
             className={`border-[1px] p-1 ${
               clickedBoxes[index]
                 ? "border-blue-500 bg-gray-300"
                 : "border-black"
-            }`}
+            } section-item`}
             onClick={() => handleClick(index, value)}
           >
             <Image src={svgIcon} alt="My SVG" width={50} height={50} />
@@ -57,7 +57,7 @@ const DisplayFetchedProvider = () => {
   return (
     <div className="flex gap-3 flex-col">
       <div>
-        <div>Apigateway</div>
+        <div className="item-title">Apigateway</div>
         <Section
           ProviderData={DATA.aws["us-east-1"].apigateway}
           svgIcon={svgIcon}
@@ -65,14 +65,14 @@ const DisplayFetchedProvider = () => {
         />
       </div>
       <div>
-        <div>Ec2</div>
+        <div className="item-title">Ec2</div>
         <Section
           ProviderData={DATA.aws["us-east-1"].ec2}
           svgIcon={Ec2}
           section="ec2"
         />
       </div>
-      <div>
+      <div className="item-title">
         <div>Lambda</div>
         <Section
           ProviderData={DATA.aws["us-east-1"].lambda}
