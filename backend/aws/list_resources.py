@@ -47,3 +47,18 @@ def get_resources():
             resources_data[region] = resources_dict
 
     return resources_data
+
+
+def get_instance_sg():
+    ec2_client = boto3.client('ec2', region_name='us-east-1')
+    response = ec2_client.describe_instances()
+    for reservation in response["Reservations"]:
+        for instance in reservation["Instances"]:
+            if 'i-08c3475d69dd0c397' == instance['InstanceId']:
+                print("InstanceId %s" %instance['InstanceId'])
+                print("Instance Details \n %s" %instance)
+                print("SG Id %s" %instance['SecurityGroups'][0]['GroupId'])
+                response = ec2_client.describe_security_groups(GroupIds=[
+                            instance['SecurityGroups'][0]['GroupId'],
+                            ])
+                print(response)
