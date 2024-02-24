@@ -1,11 +1,15 @@
+import json
 import time
 from flask import Flask, request, jsonify
 from flask_socketio import SocketIO,emit
 from flask_cors import CORS
 import os
 import aws.list_resources as list_resources
+import aws.get_recource as get_ec2_details
+import terraform.apply as apply_terraform
+import genai
 import base64
- 
+import pickle
  
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -64,10 +68,64 @@ def migrate_resources():
     return jsonify({"message": "Migration completed"}), 200
  
 @socketio.on("migrate")
-def connected():
-    """event listener when client connects to the server"""
-    time.sleep(10)
-    emit("result",{"message":"Response after 10 secods"})
- 
+def connected(data, source_cloud, destination_cloud, destination_cloud_creds):
+    # print(destination_cloud_creds)
+    try:
+        if not source_cloud or not destination_cloud or not destination_cloud_creds or not data:
+            emit("result",{"message":f"Input Missing"})
+            return jsonify({"error": "Input Missing"}), 400
+        try:
+            file = open('terraform/creds.json', 'w')
+            file.write(json.dumps(destination_cloud_creds))
+            file.close()
+        except Exception as e:
+            print(e)
+        # print(data)
+        if not source_cloud or source_cloud not in ['aws','azure','gcp']:
+            return jsonify({"error": "Invalid source cloud type"}), 400
+        elif source_cloud == 'aws':
+            try:
+                    instance = {}
+                    try:
+                        for ec2 in data['aws']['us-east-1']['ec2']:
+                            instance, sg = get_ec2_details.get_ec2_details(ec2)
+                            instance.update(sg)
+                    except Exception as e:
+                        print(f"Error parsing JSON: {e}")
+                    # print(instance)
+                    prompt = genai.genarate_prompt(instance,destination_cloud)
+                    # print(prompt)
+                    response = genai.get_response(prompt)
+                    # print(response)
+                    try:
+                        file = open('terraform/main.tf', 'w')
+                        file.write(response)
+                        file.close()
+                    except Exception as e:
+                        print(e)
+                    if apply_terraform.apply_terraform('terraform/main.tf'):
+                        emit("result",{"message":f"{data} Migrated Successfully"})
+                    emit("result",{"message":f"Error in Migration"})
+            except Exception as e: 
+                print(e)
+                emit("result",{"message":f"Error in Migration"})
+        elif source_cloud == 'azure':
+            print('azure')
+        elif source_cloud == 'gcp':
+            print('gcp')
+        else:
+            print('on-premises')
+            prompt = genai.genarate_prompt(instance,destination_cloud)
+                    # print(prompt)
+            response = genai.get_response(prompt)
+            # emit("result",{"message":f"{response}"})
+        # emit("result",{"message":f"{data} Migrated Successfully"})
+    except Exception:
+        print("Error in migration")
+
+@socketio.on("disconnect")
+def disconnect():
+    emit("disconnect",f"Websocket disconnected",broadcast=True)
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
