@@ -1,7 +1,5 @@
-import fileinput
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage
-import hcl
 model = 'gpt-35-turbo-16k'
 # model = 'amazon.titan-text-express-v1'
 
@@ -20,11 +18,13 @@ def get_response(mesage):
 
 def genarate_prompt(data, destination_cloud):
     content = None
-    f = open(f"{destination_cloud}-main.tf", "r")
-    content = f.read()
-    prompt = f"Genarate a terraform script to create virtual machine on {destination_cloud} similar to {data} consider all resources required to make virtual machine publically accessible. Refer below content {content}"
-    return prompt
-
+    try:
+        f = open(f"{destination_cloud}-main.tf", "r")
+        content = f.read()
+        prompt = f"Genarate a terraform script to create virtual machine on {destination_cloud} similar to {data} consider all resources required to make virtual machine publically accessible. Refer below content {content}"
+        return prompt
+    except Exception as e:
+        print(e)
 # if __name__=='__main__':
 #     # get_response()
 #     # genarate_prompt("Hello", "gcp")

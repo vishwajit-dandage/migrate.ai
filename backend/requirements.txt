@@ -2,3 +2,5 @@ flask
 flask_socketio
 flask_cors
 boto3
+langchain==0.0.354
+openai==1.12.0
