@@ -82,7 +82,8 @@ export function Connect() {
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
-              {ProviderDetailsPlaceholder[provider].key}
+              {/* {ProviderDetailsPlaceholder[provider].key} */}
+              Access key id
             </Label>
             <Input
               id="userid"
@@ -92,7 +93,8 @@ export function Connect() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="username" className="text-right">
-              {ProviderDetailsPlaceholder[provider].secret}
+              {/* {ProviderDetailsPlaceholder[provider].secret} */}
+              Secret access key
             </Label>
             <Input
               id="userkey"
