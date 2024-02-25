@@ -25,48 +25,34 @@ import { useEffect, useState } from "react";
 import { ProviderService } from "../../services/provider";
 import { redirect } from "next/navigation";
 type ObjectKey = keyof typeof ProviderDetailsPlaceholder;
-export function Connect() {
+export function ConnectTarget() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const [key, setKey] = useState("AKIAYS2NSCY5TCMA5TQC");
-  const [secret, setSecret] = useState(
-    "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"
-  );
-  const selectedProvider = useCloudProviderStore((state) => state.provider);
-  const setProviderData = useStoreProvider((state) => state.handleProvider);
-  const provider = selectedProvider as ObjectKey;
+  const [text, setText] = useState("");
+  const [jsonData, setJsonData] = useState({});
+  const { targetProvider } = useCloudProviderStore();
+  const provider = targetProvider as ObjectKey;
+  const { setTargetCredData } = useStoreProvider();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const encodedStringBtoA = btoa(`${key}:${secret}`);
   const { setDisabled } = useDisabled();
+  useStoreProvider;
 
-  const handleMigrateData = async () => {
-    console.log("handleMigrateData called");
+  const handleSubmit = () => {
     setIsLoading(true);
-
     try {
-      const response = await ProviderService.getConnectionToProvider(
-        encodedStringBtoA,
-        selectedProvider
-      );
-      console.log("response", response);
-
-      if (response) {
-        console.log(" if ", response);
-        setProviderData(response.data);
-        setDisabled(false);
-        setOpen(false);
-        // Assuming redirect is a function to redirect the user
-        // Modify this according to your actual redirect mechanism
-        router.push("/");
-      }
+    //   console.log("text", text);
+    //   console.log("text", JSON.parse(JSON.stringify(text)));
+      setTargetCredData(text);
+      setOpen(false);
     } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setIsLoading(false);
+      console.error("Invalid JSON format");
     }
+    setIsLoading(false);
   };
 
-  useEffect(() => {});
+  useEffect(() => {
+    console.log(typeof jsonData);
+  });
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -75,36 +61,29 @@ export function Connect() {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>
-            Connect to <span className=" uppercase">AWS</span>
+            Connect to <span className=" uppercase">GCP</span>
           </DialogTitle>
           <DialogDescription>
             Provide related information for connection to preferred cloud.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
+          <div className="flex flex-col items-center gap-4">
             <Label htmlFor="name" className="text-right">
               {ProviderDetailsPlaceholder[provider].key}
             </Label>
-            <Input
+            <textarea
               id="userid"
-              className="col-span-3"
-              onChange={(e) => setKey(e.target.value)}
-            />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              {ProviderDetailsPlaceholder[provider].secret}
-            </Label>
-            <Input
-              id="userkey"
-              className="col-span-3"
-              onChange={(e) => setSecret(e.target.value)}
+              className="col-span-3 w-[100%]"
+              onChange={(e) => {
+                setText(e.target.value);
+              }}
+              rows={10}
             />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={handleMigrateData}>
+          <Button type="submit" onClick={handleSubmit}>
             {isLoading ? "Connecting...." : "Connect"}
           </Button>
         </DialogFooter>

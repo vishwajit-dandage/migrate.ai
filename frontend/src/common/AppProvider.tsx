@@ -14,7 +14,7 @@ export const AppProvider = ({
       new QueryClient({
         defaultOptions: {
           queries: {
-            refetchOnWindowFocus: false,
+            refetchOnWindowFocus: false, 
             gcTime: 3600000,
             staleTime: 3600000,
           },
