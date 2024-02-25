@@ -1,5 +1,4 @@
 import json
-import time
 from flask import Flask, request, jsonify
 from flask_socketio import SocketIO,emit
 from flask_cors import CORS
@@ -9,7 +8,6 @@ import aws.get_recource as get_ec2_details
 import terraform.apply as apply_terraform
 import genai
 import base64
-import pickle
  
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -69,8 +67,9 @@ def migrate_resources():
  
 @socketio.on("migrate")
 def connected(data, source_cloud, destination_cloud, destination_cloud_creds):
-    # print(destination_cloud_creds)
     try:
+        # print(destination_cloud_creds)
+
         if not source_cloud or not destination_cloud or not destination_cloud_creds or not data:
             emit("result",{"message":f"Input Missing"})
             return jsonify({"error": "Input Missing"}), 400
@@ -104,11 +103,11 @@ def connected(data, source_cloud, destination_cloud, destination_cloud_creds):
                     except Exception as e:
                         print(e)
                     if apply_terraform.apply_terraform('terraform/main.tf'):
-                        emit("result",{"message":f"{data} Migrated Successfully"})
+                        emit("result",{"message":f"{data} Migrated Successfully","success":True})
                     emit("result",{"message":f"Error in Migration"})
             except Exception as e: 
                 print(e)
-                emit("result",{"message":f"Error in Migration"})
+                emit("result",{"message":f"Error in Migration","success":False})
         elif source_cloud == 'azure':
             print('azure')
         elif source_cloud == 'gcp':
