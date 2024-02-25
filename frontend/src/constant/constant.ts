@@ -8,7 +8,6 @@ export const ProviderDetailsPlaceholder = {
     secret: "",
   },
   gcp: {
-    key: "",
-    secret: "",
+    key: "Attach Json for GCP",
   },
 };

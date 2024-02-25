@@ -19,8 +19,8 @@ const DropDownComp = () => {
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="aws">AWS</SelectItem>
-        <SelectItem value="azure">Azure</SelectItem>
-        <SelectItem value="gcp">GCP</SelectItem>
+        {/* <SelectItem value="azure">Azure</SelectItem> */}
+        {/* <SelectItem value="gcp">GCP</SelectItem> */}
       </SelectContent>
     </Select>
   );

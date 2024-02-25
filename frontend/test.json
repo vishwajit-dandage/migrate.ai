@@ -1,15 +1,8 @@
 {
   "aws": {
     "us-east-1": {
-      "apigateway": [
-        "LambdaProxyAPI",
-        "LambdaProxyAPI1"
-      ],
       "ec2": [
         "i-0a7878a7c2b2212d8"
-      ],
-      "lambda": [
-        "GetStartedLambdaProxyIntegration"
       ]
     }
   }
