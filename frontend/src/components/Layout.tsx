@@ -15,7 +15,8 @@ const Layout = () => {
   const { providerData } = useStoreProvider();
   return (
     <div className="flex px-5 items-center justify-center gap-5 mt-5">
-      <div className=" shadow-sm h-[600px] w-[50%]">
+
+      <div className=" shadow-md h-[600px] w-[50%] p-1">
         <div className="flex items-center justify-evenly mt-5">
           <DropDownComp />
         </div>
@@ -28,13 +29,14 @@ const Layout = () => {
         </div>
         <Migrate />
       </div>
-      <div className=" shadow-sm h-[400px] w-[50%] ">
+
+      <div className=" shadow-md h-[600px] w-[50%] p-1">
         <div className="flex items-center justify-evenly mt-5">
           <TargetDropDown />
         </div>
         <div className="flex items-center justify-between p-3">
           <ConnectTarget />
-          <div>Select resources to migrate</div>
+          {/* <div>Select resources to migrate</div> */}
         </div>
         <div className="flex justify-center items-center font-semibold font-mono text-2xl text-green-500">
           {status && (
