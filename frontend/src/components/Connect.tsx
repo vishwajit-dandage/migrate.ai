@@ -28,10 +28,8 @@ type ObjectKey = keyof typeof ProviderDetailsPlaceholder;
 export function Connect() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const [key, setKey] = useState("AKIAYS2NSCY5TCMA5TQC");
-  const [secret, setSecret] = useState(
-    "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"
-  );
+  const [key, setKey] = useState("");
+  const [secret, setSecret] = useState("");
   const selectedProvider = useCloudProviderStore((state) => state.provider);
   const setProviderData = useStoreProvider((state) => state.handleProvider);
   const provider = selectedProvider as ObjectKey;
