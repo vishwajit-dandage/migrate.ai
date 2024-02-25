@@ -38,10 +38,10 @@ const Layout = () => {
         </div>
         <div className="flex justify-center items-center font-semibold font-mono text-2xl text-green-500">
           {status && (
-            <>
+            <div className="flex flex-col justify-center items-center ">
               <div>Migraton Successful </div>
-              <div>Please check VM instance in your GCP account"</div>
-            </>
+              <div>Please check VM instance in your GCP account</div>
+            </div>
           )}
         </div>
       </div>

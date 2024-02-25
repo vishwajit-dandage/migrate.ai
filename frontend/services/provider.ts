@@ -8,7 +8,7 @@ export const ProviderService = {
     selectedProvider: string
   ) => {
     const response = await axios.get(
-      `http://10.24.128.192:5000/fetchresources?cloud_type=${selectedProvider}`,
+      `http://localhost:5000/fetchresources?cloud_type=${selectedProvider}`,
       {
         headers: {
           Authentication: encodedStringBtoA,

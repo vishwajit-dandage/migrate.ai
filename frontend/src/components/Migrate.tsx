@@ -53,7 +53,7 @@ const Migrate = () => {
         client_x509_cert_url:"https://www.googleapis.com/robot/v1/metadata/x509/semicolons-viewer-1%40synthetic-cargo-415216.iam.gserviceaccount.com",
         universe_domain: "googleapis.com",
       }
-      const socket = io("http://10.24.128.192:5000/", {
+      const socket = io("http://localhost:5000/", {
         transports: ["websocket"],
         cors: {
           origin: "http://localhost:3000/",
